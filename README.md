@@ -1,5 +1,36 @@
 # Tractoflow Diffusion MRI Processing Pipeline
 
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+> **Runs the TractoFlow Nextflow pipeline (scilus 1.6.0 container) on a DWI and T1w image to produce preprocessed DWI, a resampled T1 and a particle-filtering (PFT) tractogram.**
+
+Arranges the inputs as a single-subject TractoFlow input folder, installs Miniconda and Nextflow 21.10.6 at run time, clones the scilus/tractoflow repository and runs it with the scilus 1.6.0 Singularity image. TractoFlow performs DWI preprocessing (denoising, eddy/topup, registration, resampling), tensor and fODF fitting and PFT tracking. It needs internet access on the compute node and about four hours on 16 cores.
+
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/dwi` · `neuro/anat/t1w` |
+| 📤 **Outputs** | `neuro/dwi` · `neuro/anat/t1w` · `neuro/track/trk` |
+| 🐳 **Container** | `scilus/scilus:1.6.0` |
+| ⚙️ **Resources** | 16 CPUs · 4 h walltime |
+| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.868](https://doi.org/10.25663/brainlife.app.868) |
+
+#### 📥 Inputs
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `dwi` | `neuro/dwi` | yes | Raw DWI (NIfTI) with bvals and bvecs. |
+| `t1w` | `neuro/anat/t1w` (acpc_aligned) | yes | ACPC-aligned T1-weighted image of the same subject. |
+
+#### 📤 Outputs
+
+| Output | Datatype | Description |
+|---|---|---|
+| `Resample_DWI` | `neuro/dwi` | Preprocessed, resampled DWI from TractoFlow with the bvals/bvecs of the fODF shell. |
+| `Resample_T1` | `neuro/anat/t1w` | Preprocessed, resampled T1 from TractoFlow. |
+| `PFT_Tracking` | `neuro/track/trk` | Probabilistic particle-filtering tractogram seeded in white matter (.trk). |
+
+<!-- brainlife-app:end -->
+
 An automated, containerized workflow for preprocessing and analyzing diffusion-weighted imaging (DWI) data using Tractoflow. This app manages inputs and outputs following Brainlife.io standards, facilitating reproducibility, portability, and integration into neuroimaging pipelines.
 
 ---
